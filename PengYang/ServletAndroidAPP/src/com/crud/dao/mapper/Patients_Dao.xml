@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.Patients_Dao">
+
+	<!-- 魏鹏辉 2017.9.15 Patient表 dao层映射文件 -->
+
+    <sql id="cols">
+    	id,pat_id,name,sex,age,telephone,result,doc_name,diag_doctor,result_pdf_path
+    </sql>
+    <resultMap id="PatientsMap" type="com.modle.Patients">
+    
+    	<result property="id" column="id"/>
+    	<result property="pat_id" column="pat_id"/>
+    	<result property="name" column="name"/>
+    	<result property="sex" column="sex"/>
+    	<result property="age" column="age"/>
+    	<result property="telphone" column="telphone"/>
+    	<result property="result" column="result"/>
+    	<result property="doc_name" column="doc_name"/>
+    	<result property="Diag_Doctor" column="Diag_Doctor"/>
+    	<result property="pdf_path" column="result_pdf_path"/>
+    </resultMap>
+    <!-- 记录数查询 -->
+    <select id="patientCount" resultType="int">
+    	select count(*) from patient;
+    </select>
+    <select id="findCountByName" parameterType="String" resultType="int">
+    	select count(*) from patient where name=#{name};
+    </select>
+    <select id="findCountByNum" parameterType="int" resultType="int">
+    	select count(*) from patient where pat_id=#{pat_id};
+    </select>
+    <!-- 分页查询 -->
+    <select id="pageFindAll" parameterType="java.util.Map" resultMap="PatientsMap">
+    	select <include refid="cols" /> from patient limit #{start},#{end};
+    </select>
+    <select id="findByName" parameterType="java.util.Map" resultMap="PatientsMap">
+    	select <include refid="cols" /> from patient where name=#{name} order by id limit #{start},#{end};
+    </select>
+    <!--  
+    <select id="findByNum" parameterType="java.util.Map" resultType="com.modle.Patients">
+    	select <include refid="cols" /> from patients where pat_id=#{pat_id} order by pat_id limit #{start},#{end};
+    </select> -->
+    <!-- 全部查询 -->
+    <select id="findAll" resultMap="PatientsMap">
+    	select <include refid="cols" /> from patient;
+    </select>
+    <!-- 按照id查询单个 -->
+    <select id="findOne" parameterType="int" resultMap="PatientsMap">
+    	select <include refid="cols"/> from patient where id=#{id};
+    </select>
+    <!-- 插入 -->
+    <insert id="addPatients" parameterType="com.modle.Patients">
+    	 insert into patient( <include refid="cols"/> ) values (null,#{pat_id},#{name},#{sex},#{age},#{telephone},#{result},
+    		#{doc_name},#{Diag_Doctor},#{pdf_path});
+    </insert>
+    <!-- 修改 -->
+    <update id="updatePatient" parameterType="com.modle.Patients">
+    	 update patient set pat_id=#{pat_id} name=#{name},sex=#{sex},age=#{age},telphone=#{telephone},
+    	 	result=#{result},doc_name=#{doc_name},Diag_Doctor=#{Diag_Doctor} ,result_pdf_path=#{pdf_path} where id=#{id}
+    </update>
+    <!-- 删除 -->
+    <delete id="deletePatients" parameterType="int">
+    	delete from patient where id=#{id};
+    </delete>
+</mapper>    

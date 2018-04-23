@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HeartAchart</string>
+    <string name="msg_connect_failed">连接失败</string>
+    <string name="ble_not_supported">设备不支持BLE，请升级系统或者联系客服</string>
+    <string name="title_devices">设备列表</string>
+
+
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.FeedBack_Dao">
+    <sql id="cols">
+         id,feed,u_id
+    </sql>
+    <resultMap type="com.modle.FeedBack" id="feedBackMap">
+         <id property="id" column="id"/>
+         <result property="feed" column="feed"/>
+         <association property="user" javaType="com.modle.UserLogin">
+             <id property="id" column="id"/>
+             <result property="userName" column="username"/>
+         </association>
+    </resultMap>
+    
+    <select id="findAllFeedBack" parameterType="java.util.Map" resultMap="feedBackMap">
+        select f.id,f.feed,f.u_id,u.username from feedback f,UserLogin u limit #{start},#{end};     
+    </select>
+    
+    <select id="findOneFeedBack" parameterType="int" resultType="com.modle.FeedBack">
+        select <include refid="cols"/> from feedback  where id=#{id};   
+    </select>
+    
+    <insert id="insertFeedBack" parameterType="com.modle.FeedBack" >
+        insert into feedback( <include refid="cols"/> ) values (null,#{feed},#{user.id});    
+    </insert>
+    <update id="updateFeedBack" parameterType="com.modle.FeedBack" >
+        update feedback set feed=#{feed},u_id=#{u_id} where id=#{id};    
+    </update>
+    <delete id="deleteFeedBack" parameterType="int" >
+        delete from feedback where id= #{id};   
+    </delete>
+    <select id="feedBackCount" resultType="int">
+    	select count(*) from feedback;
+    </select>
+    
+</mapper>

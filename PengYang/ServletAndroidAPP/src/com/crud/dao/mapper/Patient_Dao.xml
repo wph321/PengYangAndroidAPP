@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.Patient_Dao">
+    <sql id="cols">
+         id,name,sex,age,shenqingxu,menzhenhao,zhuyuanhao,idhao,jianchadata,keshi,
+         xiangmu,laoyuan,baogao       
+    </sql>
+    <resultMap id="PatientMap" type="com.modle.Patient">
+    	<id property="id" column="id" />
+    	<result property="name" column="name" />
+    	<result property="sex" column="sex" />
+    	<result property="age" column="age" />
+    	<result property="shenqingxu" column="shenqingxu" />
+    	<result property="menzhenhao" column="menzhenhao" />
+    	<result property="zhuyuanhao" column="zhuyuanhao" />
+    	<result property="idhao" column="idhao" />
+    	<result property="jianchashijian" column="jianchadata" />
+    	<result property="keshi" column="keshi" />
+    	<result property="xiangmu" column="xiangmu" />
+    	<result property="laoyuan" column="laoyuan" />
+    	<result property="baogao" column="baogao" />
+    </resultMap>
+    <select id="findAllPatient" resultMap="PatientMap">
+        select <include refid="cols"/> from patient     
+    </select>
+    <select id="findOnePatient" parameterType="int" resultType="com.modle.Patient">
+        select <include refid="cols"/> from patient  where id=#{id}    
+    </select>
+    <insert id="insertPatient" parameterType="com.modle.Patient" >
+        insert into patient( <include refid="cols"/> ) values (null,#{name},#{password})    
+    </insert>
+    <update id="updatePatient" parameterType="com.modle.Patient" >
+        update patient set name=#{name},password=#{password} where id=#{id}    
+    </update>
+    <delete id="deletePatientById" parameterType="int" >
+        delete from patient where id= #{id}   
+    </delete>
+</mapper>

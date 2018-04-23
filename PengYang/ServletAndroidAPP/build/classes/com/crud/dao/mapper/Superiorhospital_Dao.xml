@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.Superiorhospital_Dao">
+   
+    <sql id="cols">
+    id,name
+    </sql>
+    <resultMap type="com.modle.Superiorhospital" id="SuperiorhospitalMap">
+        
+    </resultMap>
+    
+    <insert id="add" parameterType="com.modle.Superiorhospital" >
+        insert into superiorhospital( <include refid="cols"/> ) values (null,#{name});    
+    </insert>
+   	
+   	<select id="findAll" resultType="com.modle.Superiorhospital">
+   		select <include refid="cols" /> from superiorhospital;
+   	</select>
+    
+   	<select id="findId" parameterType="String" resultType="int">
+   		select id from superiorhospital where name=#{name};
+   	</select>
+
+   	<select id="count" parameterType="String" resultType="int">
+   		select count(*) from superiorhospital where name=#{name};
+   	</select>
+
+
+</mapper>

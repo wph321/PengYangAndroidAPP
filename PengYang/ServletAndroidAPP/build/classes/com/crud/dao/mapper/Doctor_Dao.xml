@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.Doctor_Dao">
+    <sql id="cols">
+         id,name,password       
+    </sql>
+    <resultMap id="DoctorMap" type="com.modle.Doctor">
+    	<id property="id" column="id" />
+    	<result property="name" column="name" />
+    	<result property="password" column="password" />
+    </resultMap>
+    <select id="findAllDoctor" resultMap="DoctorMap">
+        select <include refid="cols"/> from doctor     
+    </select>
+    <select id="findDoctorById" parameterType="int" resultType="com.modle.Doctor">
+        select <include refid="cols"/> from doctor  where id=#{id}    
+    </select>
+    <insert id="insertDoctor" parameterType="com.modle.Doctor" >
+        insert into doctor( <include refid="cols"/> ) values (#{id},#{name},#{password})    
+    </insert>
+    <insert id="updateDoctor" parameterType="com.modle.Doctor" >
+        update doctor set name=#{name},password=#{password} where id=#{id}    
+    </insert>
+    <update id="deleteDoctor" parameterType="int" >
+        delete from doctor where id= #{id}   
+    </update>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crud.dao.UserLogin_Dao">
+    <sql id="cols">
+         id,username,password
+    </sql>
+    
+    <resultMap type="com.modle.UserLogin" id="userlogin">
+    	<result property="id" column="id"/>
+    	<result property="userName" column="username"/>
+    	<result property="password" column="password"/>
+    </resultMap>
+    
+    <select id="findAll" resultMap="userlogin">
+    	select <include refid="cols" /> from userlogin;
+    </select>
+    
+    <select id="findOne" parameterType="String" resultType="com.modle.UserLogin">
+    	select <include refid="cols" /> from userlogin where username=#{userName};
+    </select>
+    
+    <select id="findCount" parameterType="String" resultType="int">
+    	select count(*) from userlogin where username=#{userName};  
+    </select>
+    
+    <insert id="add" parameterType="com.modle.UserLogin">
+    	insert into userlogin values(#{id},#{userName},#{passworld});
+    </insert>
+    
+    <update id="update" parameterType="com.modle.UserLogin">
+    	update userlogin set username=#{userName},password=#{passworld} where id=#{id};
+    </update>
+    
+    <delete id="delete" parameterType="int">
+    	delete from userlogin where id=#{id};
+    </delete>
+    
+</mapper>
